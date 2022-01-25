@@ -2,23 +2,24 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private float _minHealth = 0f;
-    private float _maxHealth = 100f;
-
     public float Health { get; private set; }
+    public float MinHealth { get; private set; }
+    public float MaxHealth { get; private set; }
 
     void Start()
     {
-        Health = _minHealth;
+        Health = MinHealth;
+        MinHealth = 0f;
+        MaxHealth = 100f;
     }
 
     public void TakeHeal(float amount)
     {
         Health += amount;
 
-        if (Health > _maxHealth)
+        if (Health > MaxHealth)
         {
-            Health  = _maxHealth;
+            Health  = MaxHealth;
         }
     }
 
@@ -26,9 +27,9 @@ public class Player : MonoBehaviour
     {
         Health -= amount;
 
-        if (Health < _minHealth)
+        if (Health < MinHealth)
         {
-            Health = _minHealth;
+            Health = MinHealth;
         }
     }
 }
