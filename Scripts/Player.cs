@@ -1,10 +1,13 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
     public float Health { get; private set; }
     public float MinHealth { get; private set; }
     public float MaxHealth { get; private set; }
+
+    public UnityEvent OnHealthChange;
 
     void Start()
     {
@@ -16,11 +19,13 @@ public class Player : MonoBehaviour
     public void TakeHeal(float amount)
     {
         Health += amount;
-
+        
         if (Health > MaxHealth)
         {
             Health  = MaxHealth;
         }
+
+        OnHealthChange.Invoke();
     }
 
     public void TakeDamage(float amount)
@@ -31,5 +36,7 @@ public class Player : MonoBehaviour
         {
             Health = MinHealth;
         }
+
+        OnHealthChange.Invoke();
     }
 }

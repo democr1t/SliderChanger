@@ -8,6 +8,7 @@ public class Healthbar : MonoBehaviour
 
     private float _speed;
     private float _currentAmount;
+    private float _smooth;
 
     private void Start()
     {
@@ -15,11 +16,20 @@ public class Healthbar : MonoBehaviour
         _healthbar.value = _player.MinHealth;
         _speed = 1f;
         _currentAmount = 0;
+        _player.OnHealthChange.AddListener(Renew);
     }
 
-    private void Update()
+    private void Renew()
     {
-        _healthbar.value = Mathf.MoveTowards(_currentAmount, _player.Health, _speed * Time.deltaTime);
-        _currentAmount = _healthbar.value;
-    } 
+        while (_healthbar.value != _player.Health)
+        {
+            _healthbar.value = Mathf.MoveTowards(_currentAmount, _player.Health, _speed);
+            _currentAmount = _healthbar.value;
+        }
+    }
+
+    private void OnDisable()
+    {
+        _player.OnHealthChange.RemoveListener(Renew);
+    }
 }
