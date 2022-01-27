@@ -3,12 +3,12 @@ using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
+    public UnityEvent OnHealthChange;
+    
     public float Health { get; private set; }
     public float MinHealth { get; private set; }
     public float MaxHealth { get; private set; }
-
-    public UnityEvent OnHealthChange;
-
+    
     void Start()
     {
         Health = MinHealth;
